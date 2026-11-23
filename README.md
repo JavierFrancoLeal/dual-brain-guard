@@ -8,7 +8,8 @@
 
 > **Prompt-only review rules get skipped.** Dual-Brain Guard mechanically blocks `git commit`, `git push`, destructive git operations, and unaudited turn completion until an independent second brain audits the real diff *after* your last edit.  
 > 📖 **Read the field-notes essay:** [Why Single-Agent Code Reviews Fail](./docs/ESSAY_WHY_SINGLE_AGENT_REVIEWS_FAIL.md)  
-> 🧠 **Multi-LLM Pairing Guide:** [How to Pair Two Opposite LLMs (Field-Tested & Benchmark Predictions)](./docs/TANDEM_PAIRING_GUIDE.md)
+> 🧠 **Multi-LLM Pairing Guide:** [How to Pair Two Opposite LLMs (Field-Tested & Benchmark Predictions)](./docs/TANDEM_PAIRING_GUIDE.md)  
+> 📊 **Empirical Study & ROI (`2.80B` Tokens):** [Dual-Brain Hall of Fame & 7.3× Offload ROI Study](./docs/EMPIRICAL_HALL_OF_FAME_AND_ROI.md) (`node src/roi-simulator.mjs`)
 
 ![Dual-Brain Guard Terminal Demo](./assets/demo-terminal.svg)
 
@@ -75,6 +76,7 @@ echo '{"tool_name":"Bash","tool_input":{"command":"git push origin main"}}' | no
 | **[`agent-governance`](https://github.com/JavierFrancoLeal/agent-governance)** | Complete 26-plugin DeepSeek Harness governance suite (mother repository) | **`v1.0.0` Live** |
 | **[`best-security-governance-architects`](https://github.com/JavierFrancoLeal/best-security-governance-architects)** | CPU-first pre-merge security & governance suite (`ECOSYSTEM_CONTRACT v1.2.0`) | **`v1.2.0` Live** |
 | **[`best-ui-ux-designers`](https://github.com/JavierFrancoLeal/best-ui-ux-designers)** | Adversarial UI/UX design judgment suite — 12 Barbell design minds & 4 Via Negativa auditors | **`v1.2.0` Live** |
+| **[`contrast-guard`](https://github.com/JavierFrancoLeal/contrast-guard)** | Zero-dependency WCAG 2.1 + perceptual CIELAB ΔE contrast & anti-camouflage auditor (CLI + headless Chrome CDP) | **`v1.0.0` Live** |
 
 ---
 
