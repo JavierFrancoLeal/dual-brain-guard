@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 440" width="920" height="440" font-family="ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace">
+  <rect width="920" height="440" rx="14" fill="#0B1120"/>
+  <rect width="920" height="38" rx="14" fill="#1E293B"/>
+  <rect y="24" width="920" height="14" fill="#1E293B"/>
+  <circle cx="24" cy="19" r="6" fill="#EF4444"/>
+  <circle cx="44" cy="19" r="6" fill="#F59E0B"/>
+  <circle cx="64" cy="19" r="6" fill="#10B981"/>
+  <text x="460" y="24" fill="#94A3B8" font-size="13" text-anchor="middle">dual-brain-guard — Mechanical Pre-Commit &amp; Stop Gate (Claude Code / Cursor / Gemini / DSH)</text>
+
+  <g font-size="13.5">
+    <text x="24" y="72" fill="#94A3B8"># 1. Agent edits src/auth.ts and tries to push without an independent cross-audit</text>
+    <text x="24" y="96" fill="#38BDF8">$ git push origin main</text>
+
+    <rect x="24" y="110" width="872" height="72" rx="8" fill="#450A0A" stroke="#EF4444" stroke-width="1.5"/>
+    <text x="40" y="136" fill="#FCA5A5" font-weight="700">✗ [DUAL-BRAIN COMMIT/PUSH GATE] BLOCKED (exit 2)</text>
+    <text x="40" y="160" fill="#FECACA" font-size="12.5">Mutating git command blocked without subsequent cross-audit (lastMutationSeq=1, lastAuditSeq=0).</text>
+
+    <text x="24" y="216" fill="#94A3B8"># 2. Agent invokes an independent second brain against the real git diff</text>
+    <text x="24" y="240" fill="#38BDF8">$ claude -p "Adversarial read-only audit of git diff in src/auth.ts"</text>
+    <text x="24" y="264" fill="#FDE68A">PASS — 0 blockers · post-tool hook recorded audit (lastAuditSeq=2)</text>
+
+    <text x="24" y="302" fill="#94A3B8"># 3. Agent retries git push — mechanical gate verifies lastAuditSeq &gt;= lastMutationSeq</text>
+    <text x="24" y="326" fill="#38BDF8">$ git push origin main</text>
+
+    <rect x="24" y="344" width="872" height="62" rx="8" fill="#064E3B" stroke="#10B981" stroke-width="1.5"/>
+    <text x="40" y="370" fill="#A7F3D0" font-weight="700">✓ ALLOWED (exit 0) — Independent cross-audit verified (lastMutationSeq=1, lastAuditSeq=2)</text>
+    <text x="40" y="392" fill="#6EE7B7" font-size="12.5">To github.com:org/repo.git · main -&gt; main</text>
+  </g>
+</svg>
