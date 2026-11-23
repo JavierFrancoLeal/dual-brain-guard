@@ -223,3 +223,12 @@ test("8. P0 regressions: MultiEdit, Gemini replace/run_shell_command, failed Bas
   classifyToolOutcome({ name: "replace", arguments: { path: "b.ts" } }, { exit_code: 0 }, st);
   assert.equal(evaluateStopGate(st).decision, "block", "New mutation must reset stop counter");
 });
+
+test("9. Multi-LLM support: aider, ollama, opencode, qwen, and custom DUAL_BRAIN_AUDIT_CMD_REGEX", () => {
+  assert.equal(isRealAuditCliCommand('aider --message "audit diff"'), true);
+  assert.equal(isRealAuditCliCommand('ollama run qwen3-coder "audit diff"'), true);
+  assert.equal(isRealAuditCliCommand('opencode run "verify tests"'), true);
+  assert.equal(isRealAuditCliCommand('qwen -p "audit git diff"'), true);
+  assert.equal(isRealAuditCliCommand("ollama --help"), false);
+  assert.equal(isRealAuditCliCommand("my-custom-auditor --diff", /\bmy-custom-auditor\b/), true);
+});

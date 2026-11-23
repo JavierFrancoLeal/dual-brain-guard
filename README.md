@@ -7,7 +7,8 @@
 *By [Javier Franco](https://github.com/JavierFrancoLeal) · `v1.0.0` · Zero External Dependencies · Apache-2.0*
 
 > **Prompt-only review rules get skipped.** Dual-Brain Guard mechanically blocks `git commit`, `git push`, destructive git operations, and unaudited turn completion until an independent second brain audits the real diff *after* your last edit.  
-> 📖 **Read the field-notes essay:** [Why Single-Agent Code Reviews Fail](./docs/ESSAY_WHY_SINGLE_AGENT_REVIEWS_FAIL.md)
+> 📖 **Read the field-notes essay:** [Why Single-Agent Code Reviews Fail](./docs/ESSAY_WHY_SINGLE_AGENT_REVIEWS_FAIL.md)  
+> 🧠 **Multi-LLM Pairing Guide:** [How to Pair Two Opposite LLMs (Field-Tested & Benchmark Predictions)](./docs/TANDEM_PAIRING_GUIDE.md)
 
 ![Dual-Brain Guard Terminal Demo](./assets/demo-terminal.svg)
 

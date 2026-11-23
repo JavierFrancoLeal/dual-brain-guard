@@ -119,7 +119,10 @@ if (cmd === "post-tool") {
   const toolName = payload.tool_name || payload.name || "";
   const toolInput = payload.tool_input || payload.arguments || {};
   const toolResult = payload.tool_response || payload.result || { isError: Boolean(payload.is_error), text: payload.output || "" };
-  classifyToolOutcome({ name: toolName, arguments: toolInput }, toolResult, state);
+  const auditCliRe = process.env.DUAL_BRAIN_AUDIT_CMD_REGEX
+    ? new RegExp(process.env.DUAL_BRAIN_AUDIT_CMD_REGEX)
+    : null;
+  classifyToolOutcome({ name: toolName, arguments: toolInput }, toolResult, state, { auditCliRe });
   saveState(stateFile, state);
   process.exit(0);
 }

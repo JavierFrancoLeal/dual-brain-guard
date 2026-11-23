@@ -63,11 +63,11 @@ export const GIT_READONLY_ONLY_RE = new RegExp(
 export const SHELL_MUTATION_RE =
   /(?:^|[\s;&|])(mv\s+|cp\s+|rm\s+|mkdir\s+|touch\s+|ln\s+|sed\s+-i|perl\s+-i|tee\s+|npm\s+install|pip3?\s+install|curl\s+[^;&|\n]*(?:-o|--output)\s+|wget\s+[^;&|\n]*-O\s+|git(?:\s+(?:--?[A-Za-z0-9-]+(?:=\S+)?|-C\s+\S+|-c\s+\S+))*\s+(?:add|commit|push|merge|rebase|cherry-pick|am|revert|reset|rm|mv|clean|apply|clone|checkout\s+-b|branch(?:\s+-[A-Za-z-]+)*\s+(?:-[dDmMcC]|--delete|--move|--copy)|remote(?:\s+-v)*\s+(?:add|remove|rm|rename|set-url|prune)|tag(?!\s+(?:-l|--list)\b)(?:\s+\S+)))|(?<![0-9&])>{1,2}(?!\s*&)(?!\s*\/dev\/null\b)/i;
 
-// Generic second-brain CLI audit detectors (supports dsh, agy, claude, codex, gemini, or custom regex)
+// Generic second-brain CLI audit detectors (supports dsh, agy, claude, codex, gemini, aider, opencode, ollama, qwen, llm, or custom regex)
 const AUDIT_CLI_NOOP_RE = /(?:^|\s)(?:--help|-h|--version|-V)\b/;
 const SHELL_BG_END_RE = /(?:^|[^>&])&\s*$/;
 const DEFAULT_AUDIT_CLI_RE =
-  /(?:^|(?:&&|\|\||[;|\n(])\s*)(?:(?:[A-Za-z_][A-Za-z0-9_]*=\S+\s+)*)(?:(?:nohup|time|command|\/usr\/bin\/env|env)\s+)*(?:(?:(?:\/|~\/)[^\s;&|]*\/)?(dsh|agy|codex|claude|gemini))\s+([^;&|\n]+)/;
+  /(?:^|(?:&&|\|\||[;|\n(])\s*)(?:(?:[A-Za-z_][A-Za-z0-9_]*=\S+\s+)*)(?:(?:nohup|time|command|\/usr\/bin\/env|env)\s+)*(?:(?:(?:\/|~\/)[^\s;&|]*\/)?(dsh|agy|codex|claude|gemini|aider|opencode|ollama|qwen|llm))\s+([^;&|\n]+)/;
 
 export const AUDIT_FAILURE_TEXT_RE =
   /(?:^\s*(?:antigravity|dsh|auditor)(?::|\s+(?:edit|audit|plan|models))?\s+(?:failed\b|refused\b|requires\b|unknown\s+action\b)|(?:^|\n)status:\s*(?:error|failed|exit_[1-9]\d*)\b)/i;
@@ -122,8 +122,17 @@ export function isRealAuditCliCommand(cmd, customAuditRe = null) {
   if (bin === "dsh") {
     return /(?:^|\s)--profile(?:=|\s+)headless\b/.test(args);
   }
-  if (bin === "claude" || bin === "gemini" || bin === "codex") {
-    return /(?:^|\s)(?:-p|--print|--prompt|exec)\b/.test(args);
+  if (bin === "claude" || bin === "gemini" || bin === "codex" || bin === "qwen" || bin === "opencode") {
+    return /(?:^|\s)(?:-p|--print|--prompt|exec|run)\b/.test(args);
+  }
+  if (bin === "aider") {
+    return /(?:^|\s)(?:--message|-m|--message-file)\b/.test(args);
+  }
+  if (bin === "ollama") {
+    return /^run\s+\S+/.test(args.trim());
+  }
+  if (bin === "llm") {
+    return args.trim().length > 0 && !/^(?:models|keys|logs|plugins)\b/.test(args.trim());
   }
   return false;
 }
