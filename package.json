@@ -1,6 +1,6 @@
 {
   "name": "@franco/dual-brain-guard",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Harness-agnostic mechanical Dual-Brain cross-audit guard for AI coding agents: standalone CLI, stdio MCP server, and PreToolUse/PostToolUse/Stop hook adapters for Claude Code, Cursor, Gemini CLI, Antigravity, and DeepSeek Harness.",
   "type": "module",
   "main": "./src/core.mjs",

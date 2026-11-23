@@ -5,7 +5,7 @@
  */
 
 export const BYPASS_RE =
-  /(?<!\b(?:do\s+not|don't|never|no)\s+)\b(skip\s+(?:audit|dual-?brain|second-?brain|verifier)|no\s+audit|solo\s+mode|sin\s+(?:dsh|antigravity|gemini)|modo\s+solo)\b/i;
+  /(?<!\b(?:do\s+not|don't|should\s+not|shouldn't|must\s+not|mustn't|cannot|can't|will\s+not|won't|never|not|no)\s+(?:\w+\s+){0,2})\b(skip\s+(?:audit|dual-?brain|second-?brain|verifier)|no\s+audit(?!\s+trail\b)|solo\s+mode|sin\s+(?:dsh|antigravity|gemini)|modo\s+solo)\b/i;
 
 export const FILE_WRITE_TOOLS = new Set([
   "write",
@@ -51,12 +51,12 @@ const GIT_GLOBAL_OPTS =
   "(?:\\s+(?:(?:-C|--git-dir|--work-tree|-c)\\s+\\S+|--(?:git-dir|work-tree|namespace)=\\S+|--no-pager|-P|--paginate|--bare|--literal-pathspecs|--no-replace-objects))*";
 
 export const GIT_WRITE_RE = new RegExp(
-  `(?:^|[\\s;&|(])(?:git${GIT_GLOBAL_OPTS}\\s+(?:commit|push|merge|rebase|cherry-pick|am|revert|reset|rm|mv|clean|apply|stash\\s+(?:push|pop|apply|drop|clear)|branch(?:\\s+-[A-Za-z-]+)*\\s+(?:-[dDmMcC]|--delete|--move|--copy)|remote(?:\\s+-v)*\\s+(?:add|remove|rm|rename|set-url|prune)|worktree\\s+(?:add|remove|prune)|fetch\\s+[^;&|\\n]*--prune|tag(?!\\s+(?:-l|--list)\\b)(?:\\s+\\S+))\\b|gh\\s+pr\\s+merge\\b)`,
+  `(?:^|[\\s;&|(])(?:git${GIT_GLOBAL_OPTS}\\s+(?:commit(?![^;&|\\n]*\\s--dry-run\\b)|push|merge|rebase|cherry-pick|am|revert|reset|rm|mv|clean|apply|update-ref|filter-branch|filter-repo|checkout\\s+(?:-f|--force|-B|--)\\b|stash(?!\\s+(?:list|show)\\b)(?:\\s+(?:push|pop|apply|drop|clear|save))?(?=\\s|$|[;&|)])|branch(?:\\s+-[A-Za-z-]+)*\\s+(?:-[dDmMcC]|--delete|--move|--copy)|remote(?:\\s+-v)*\\s+(?:add|remove|rm|rename|set-url|prune)|worktree\\s+(?:add|remove|prune)|fetch\\s+[^;&|\\n]*(?:--prune|\\+refs\\/)|tag(?!\\s+(?:-l|--list)\\b)(?:\\s+\\S+))\\b|gh\\s+(?:pr\\s+merge|repo\\s+(?:delete|archive))\\b)`,
   "i",
 );
 
 export const GIT_READONLY_ONLY_RE = new RegExp(
-  `^\\s*git${GIT_GLOBAL_OPTS}\\s+(?:status|diff|log|show|rev-parse|ls-files|tag(?:\\s+(?:-l|--list)\\b[^;&|]*)?|branch(?:\\s+(?:-a|-r|-v|-vv|--list|--show-current)\\b)*|remote(?:\\s+-v)?)\\s*$`,
+  `^\\s*git${GIT_GLOBAL_OPTS}\\s+(?:status|diff|log|show|rev-parse|ls-files|stash\\s+(?:list|show)\\b[^;&|]*|tag(?:\\s+(?:-l|--list)\\b[^;&|]*)?|branch(?:\\s+(?:-a|-r|-v|-vv|--list|--show-current)\\b)*|remote(?:\\s+-v)?)\\s*$`,
   "i",
 );
 

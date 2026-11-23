@@ -232,3 +232,21 @@ test("9. Multi-LLM support: aider, ollama, opencode, qwen, and custom DUAL_BRAIN
   assert.equal(isRealAuditCliCommand("ollama --help"), false);
   assert.equal(isRealAuditCliCommand("my-custom-auditor --diff", /\bmy-custom-auditor\b/), true);
 });
+
+test("10. Hardening: extended negation clauses in BYPASS_RE, destructive git/gh verbs, and MCP non-object guard", () => {
+  const st = createInitialState();
+  beginTurn(st, 1, "We should not skip audit or say no audit trail on production code");
+  assert.equal(st.bypassRequested, false);
+  beginTurn(st, 2, "You must never ever skip audit");
+  assert.equal(st.bypassRequested, false);
+
+  assert.equal(isMutatingGitCommand("git update-ref -d refs/heads/main"), true);
+  assert.equal(isMutatingGitCommand("git filter-branch --tree-filter 'rm -f pass' HEAD"), true);
+  assert.equal(isMutatingGitCommand("git checkout -f main"), true);
+  assert.equal(isMutatingGitCommand("git stash"), true);
+  assert.equal(isMutatingGitCommand("git stash list"), false);
+  assert.equal(isMutatingGitCommand("git stash show -p"), false);
+  assert.equal(isMutatingGitCommand("gh repo delete owner/repo --yes"), true);
+  assert.equal(isMutatingGitCommand("git commit --dry-run -m 'check'"), false);
+  assert.equal(isMutatingGitCommand("git commit --amend --dry-run"), false);
+});
