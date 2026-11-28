@@ -67,10 +67,10 @@ export const SHELL_MUTATION_RE =
 const AUDIT_CLI_NOOP_RE = /(?:^|\s)(?:--help|-h|--version|-V)\b/;
 const SHELL_BG_END_RE = /(?:^|[^>&])&\s*$/;
 const DEFAULT_AUDIT_CLI_RE =
-  /(?:^|(?:&&|\|\||[;|\n(])\s*)(?:(?:[A-Za-z_][A-Za-z0-9_]*=\S+\s+)*)(?:(?:nohup|time|command|\/usr\/bin\/env|env)\s+)*(?:(?:(?:\/|~\/)[^\s;&|]*\/)?(dsh|agy|codex|claude|gemini|aider|opencode|ollama|qwen|llm))\s+([^;&|\n]+)/;
+  /(?:^|(?:&&|\|\||[;|\n(])\s*)(?:(?:[A-Za-z_][A-Za-z0-9_]*=\S+\s+)*)(?:(?:nohup|time|command|\/usr\/bin\/env|env)\s+)*(?:(?:(?:\/|~\/)[^\s;&|]*\/)?(dual-brain-audit|dsh|agy|codex|claude|gemini|aider|opencode|ollama|qwen|llm))\s+([^;&|\n]+)/;
 
 export const AUDIT_FAILURE_TEXT_RE =
-  /(?:^\s*(?:antigravity|dsh|auditor)(?::|\s+(?:edit|audit|plan|models))?\s+(?:failed\b|refused\b|requires\b|unknown\s+action\b)|(?:^|\n)status:\s*(?:error|failed|exit_[1-9]\d*)\b)/i;
+  /(?:^\s*(?:antigravity|dsh|auditor)(?::|\s+(?:edit|audit|plan|models))?\s+(?:failed\b|refused\b|requires\b|unknown\s+action\b)|(?:^|\n)status:\s*(?:error|failed|exit_[1-9]\d*)\b|(?:^|\n)VERDICT:\s*BLOCK\b)/i;
 
 export const MAX_STEERS_PER_TURN = 2;
 export const MAX_FAILED_AUDITS_FAILSAFE = 2;
@@ -133,6 +133,12 @@ export function isRealAuditCliCommand(cmd, customAuditRe = null) {
   }
   if (bin === "llm") {
     return args.trim().length > 0 && !/^(?:models|keys|logs|plugins)\b/.test(args.trim());
+  }
+  if (bin === "dual-brain-audit") {
+    return (
+      !/(?:^|\s)--list-presets\b/.test(args) &&
+      /(?:^|\s)(?:--provider|--base-url)(?:=|\s+)\S+/.test(args)
+    );
   }
   return false;
 }

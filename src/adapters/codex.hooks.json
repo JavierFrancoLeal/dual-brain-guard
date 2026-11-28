@@ -1,0 +1,36 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash|shell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npx --yes @franco/dual-brain-guard pre-tool"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "apply_patch|Write|Edit|Bash|shell",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npx --yes @franco/dual-brain-guard post-tool"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npx --yes @franco/dual-brain-guard stop"
+          }
+        ]
+      }
+    ]
+  }
+}
